@@ -1,0 +1,32 @@
+services:
+  web:
+    ports:
+      - "3210:3210"
+    build: .
+    image: fly-app:${CORE_TAG-latest}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    # networks:
+    #   - dbnet
+    # environment:
+    #   DB_HOST: host.docker.internal
+    #   DB_PORT: 5401
+    #   DB_NAME: pegasdb
+    #   DB_USER: teleuser
+    #   DB_PASSWORD: extR3@der
+    #   REPORT_DB_HOST: host.docker.internal
+    #   REPORT_DB_PORT: 5402
+    #   REPORT_DB_NAME: zeusdb
+    #   REPORT_DB_USER: teleuser
+    #   REPORT_DB_PASSWORD: extR3@der
+    #   MINIO_ENDPOINT: host.docker.internal
+    #   MINIO_PORT: 9000
+    #   MINIO_ROOT_USER: minioadmin
+    #   MINIO_ROOT_PASSWORD: minioadmin
+    #   MINIO_BUCKET_NAME: fly-telegraph
+    #   KAFKA_BROKER: host.docker.internal:9092
+    #   KAFKA_TOPIC: topic-fly-file
+    #   NEXT_PUBLIC_MAP_STAT_ZOOM_LEVEL: 3
+# networks:
+#   dbnet:
+#     driver: bridge

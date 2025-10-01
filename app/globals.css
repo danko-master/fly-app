@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Размер карты */
+.map-container-style {
+  height: 50vh !important;
+}
+
+/* Появление блока слева */
+.div-from-left {
+  animation: anim 1s linear forwards;
+  opacity: 0;
+}
+
+g {
+  animation: anim 2s linear forwards;
+  opacity: 0;
+}
+
+#repcard {
+  animation: anim 3s linear forwards;
+  opacity: 0;
+}
+
+#repcard .nav-link {
+  /* color: #00a896; */
+}
+
+@keyframes anim {
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.card-info {
+  margin: 15px;
+}
+
+.link-as-header {
+  font-weight: bold;
+  text-decoration: none;
+  color: #333533;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+.top10-color {
+  color: #e63946;
+  /* background-color: #333533; */
+}
+
+.other-color {
+  color: #457b9d;
+}
+
+input[type="range"] {
+  accent-color: #3d71b6;
+}

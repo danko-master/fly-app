@@ -1,0 +1,15 @@
+.leaflet-attribution-flag {
+	display: none !important;
+	vertical-align: baseline !important;
+	width: 1em;
+	height: 0.6669em;
+	}
+
+.leaflet-container {
+	height: 90vh;
+	}
+
+.leaflet-top:has(> .leaflet-control-zoom) {
+    /* Позиция кнопок зума под формой с данными - такое же значение в .div-middle */
+	padding-top:40vh;
+    }
