@@ -160,10 +160,10 @@ function MapGeoJSON() {
 
     await fetch("/api/helper", {
       method: "GET",
-      // cache: "force-cache",
-      // next: {
-      //   revalidate: 3600, // Кешируем на 1 час
-      // },
+      cache: "force-cache",
+      next: {
+        revalidate: 3600, // Кешируем на 1 час
+      },
     }).then((resp) =>
       resp.json().then((data) => {
         // console.log(data);
