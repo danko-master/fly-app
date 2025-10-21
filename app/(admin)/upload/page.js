@@ -17,37 +17,42 @@ export default function UploadForm() {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (!selectedFile) {
-      setUploadStatus("Выберите файл для загрузки.");
-      return;
-    }
+    // Отключаем все сервисы
+    setUploadStatus(`Ошибка: сервис отключен`);
 
-    setUploadStatus("В процессе отправки...");
-    const formData = new FormData();
-    formData.append("file", selectedFile);
+    return true;
 
-    try {
-      const response = await fetch("/api/uploader", {
-        // Replace with your API route
-        method: "POST",
-        body: formData,
-      });
+    // event.preventDefault();
+    // if (!selectedFile) {
+    //   setUploadStatus("Выберите файл для загрузки.");
+    //   return;
+    // }
 
-      if (response.ok) {
-        setUploadStatus("Файл успешно загружен!");
-        setSelectedFile(null); // Clear selected file
-        setShowStatusUploader(true);
-        setTimeout(() => {
-          router.push("/list"); // or router.replace('/target-page')
-        }, 2000);
-      } else {
-        const errorData = await response.json();
-        setUploadStatus(`Ошибка: ${errorData.message || "Unknown error"}`);
-      }
-    } catch (error) {
-      setUploadStatus(`Ошибка: ${error.message}`);
-    }
+    // setUploadStatus("В процессе отправки...");
+    // const formData = new FormData();
+    // formData.append("file", selectedFile);
+
+    // try {
+    //   const response = await fetch("/api/uploader", {
+    //     // Replace with your API route
+    //     method: "POST",
+    //     body: formData,
+    //   });
+
+    //   if (response.ok) {
+    //     setUploadStatus("Файл успешно загружен!");
+    //     setSelectedFile(null); // Clear selected file
+    //     setShowStatusUploader(true);
+    //     setTimeout(() => {
+    //       router.push("/list"); // or router.replace('/target-page')
+    //     }, 2000);
+    //   } else {
+    //     const errorData = await response.json();
+    //     setUploadStatus(`Ошибка: ${errorData.message || "Unknown error"}`);
+    //   }
+    // } catch (error) {
+    //   setUploadStatus(`Ошибка: ${error.message}`);
+    // }
   };
 
   return (

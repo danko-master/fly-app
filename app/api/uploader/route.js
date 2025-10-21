@@ -22,65 +22,70 @@ const kafka = new Kafka({
 const kafkaTopic = process.env.KAFKA_TOPIC;
 
 export async function POST(req) {
-  try {
-    const formData = await req.formData();
-    // FormData {
-    //   file: File {
-    //     size: 16257140,
-    //     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    //     name: '2025.xlsx',
-    //     lastModified: 1758567982359
-    //   }
-    // }
-    const file = formData.get("file");
+  // Отключаем все сервисы
+  setUploadStatus(`Ошибка: сервис отключен`);
 
-    // Сохранить данные в БД
-    let result = await db.Xlsxfile.create({
-      statusCode: "uploaded",
-      bucket: bucketName,
-      originalName: file.name,
-      originalSize: file.size,
-    });
+  return true;
 
-    // Отправка файла в хранилище
-    const uuid = result.dataValues.uuid;
+  // try {
+  //   const formData = await req.formData();
+  //   // FormData {
+  //   //   file: File {
+  //   //     size: 16257140,
+  //   //     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  //   //     name: '2025.xlsx',
+  //   //     lastModified: 1758567982359
+  //   //   }
+  //   // }
+  //   const file = formData.get("file");
 
-    // Сохранение файла в хранилище
-    const expiry = 60 * 5; // 5 minutes
+  //   // Сохранить данные в БД
+  //   let result = await db.Xlsxfile.create({
+  //     statusCode: "uploaded",
+  //     bucket: bucketName,
+  //     originalName: file.name,
+  //     originalSize: file.size,
+  //   });
 
-    let presignedUrl = await minioClient.presignedPutObject(
-      bucketName,
-      uuid,
-      expiry,
-      { "Content-Type": file.type }
-    );
+  //   // Отправка файла в хранилище
+  //   const uuid = result.dataValues.uuid;
 
-    const response = await fetch(presignedUrl, {
-      method: "PUT",
-      body: file,
-      headers: {
-        "Content-Type": file.type,
-        "Access-Control-Allow-Origin": "*",
-      },
-    });
+  //   // Сохранение файла в хранилище
+  //   const expiry = 60 * 5; // 5 minutes
 
-    const message = { uuid: uuid };
+  //   let presignedUrl = await minioClient.presignedPutObject(
+  //     bucketName,
+  //     uuid,
+  //     expiry,
+  //     { "Content-Type": file.type }
+  //   );
 
-    // Отправка UUID файла в Kafka
-    const producer = kafka.producer();
-    await producer.connect();
-    await producer.send({
-      topic: kafkaTopic,
-      messages: [{ value: JSON.stringify(message) }],
-    });
-    await producer.disconnect();
+  //   const response = await fetch(presignedUrl, {
+  //     method: "PUT",
+  //     body: file,
+  //     headers: {
+  //       "Content-Type": file.type,
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //   });
 
-    return NextResponse.json({ presignedUrl });
-  } catch (error) {
-    console.error("Error generating pre-signed URL:", error);
-    return NextResponse.json(
-      { error: "Failed to generate pre-signed URL" },
-      { status: 500 }
-    );
-  }
+  //   const message = { uuid: uuid };
+
+  //   // Отправка UUID файла в Kafka
+  //   const producer = kafka.producer();
+  //   await producer.connect();
+  //   await producer.send({
+  //     topic: kafkaTopic,
+  //     messages: [{ value: JSON.stringify(message) }],
+  //   });
+  //   await producer.disconnect();
+
+  //   return NextResponse.json({ presignedUrl });
+  // } catch (error) {
+  //   console.error("Error generating pre-signed URL:", error);
+  //   return NextResponse.json(
+  //     { error: "Failed to generate pre-signed URL" },
+  //     { status: 500 }
+  //   );
+  // }
 }

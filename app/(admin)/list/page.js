@@ -61,7 +61,8 @@ export default async function Page() {
                 {rustatus(rec.statusCode)}
               </td>
               <td>
-                <a href={downloadFile(rec.uuid)}>{rec.originalName}</a>
+                {/* <a href={downloadFile(rec.uuid)}>{rec.originalName}</a> */}
+                <a href="#">{rec.originalName}</a>
               </td>
               <td>{flightsNew(rec.uuid)}</td>
               <td>{rec.createdAt.toString()}</td>
